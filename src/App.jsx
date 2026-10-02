@@ -34,7 +34,11 @@ function App() {
               base={base}
               handleChangeBase={handleChangeBase}
             />
-            <Result exchangeValue={exchangeValue} quote={quote} base={base} />
+            <Result
+              exchangeValue={exchangeValue}
+              quoteValue={quote}
+              baseValue={base}
+            />
           </div>
         </div>
       </div>

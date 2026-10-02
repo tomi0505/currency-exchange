@@ -38,7 +38,7 @@ function Form({
       <div className="row">
         <div className="col-12 mb-3 col-md-6">
           <input
-            type="text"
+            type="number"
             className="form-control"
             id="exchangeValue"
             aria-describedby="exchangeValue"

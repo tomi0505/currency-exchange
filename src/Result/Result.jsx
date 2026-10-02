@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useEffect } from "react";
 
-function Result({ exchangeValue, quote, base }) {
-  const [data, setData] = useState({});
+function Result({ exchangeValue, quoteValue, baseValue }) {
+  const [data, setData] = useState(null);
+
+  const { rate, quote, base } = data ?? {};
 
   useEffect(
     function () {
@@ -11,7 +13,7 @@ function Result({ exchangeValue, quote, base }) {
       async function fetchRate() {
         try {
           const res = await fetch(
-            `https://api.frankfurter.dev/v2/rates?quotes=${quote}&base=${base}`,
+            `https://api.frankfurter.dev/v2/rates?quotes=${quoteValue}&base=${baseValue}`,
             { signal: controller.signal },
           );
           if (!res.ok) throw new Error("Błąd serwera: " + res.status);
@@ -28,15 +30,17 @@ function Result({ exchangeValue, quote, base }) {
         controller.abort();
       };
     },
-    [quote, base],
+    [quoteValue, baseValue],
   );
 
-  return (
-    <h3>
-      Do wypłaty: {(exchangeValue * data.rate).toFixed(2)} {data.quote} po
-      kursie {data.rate.toFixed(2)} {data.base}
-    </h3>
-  );
+  if (data && exchangeValue > 0) {
+    return (
+      <h3>
+        Do wypłaty: {(exchangeValue * rate).toFixed(2)} {quote} po kursie{" "}
+        {rate.toFixed(2)} {base}
+      </h3>
+    );
+  }
 }
 
 export default Result;
