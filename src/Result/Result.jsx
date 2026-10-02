@@ -33,7 +33,8 @@ function Result({ exchangeValue, quote, base }) {
 
   return (
     <h3>
-      Do wypłaty: {exchangeValue * data.rate} po kursie {data.rate}
+      Do wypłaty: {(exchangeValue * data.rate).toFixed(2)} {data.quote} po
+      kursie {data.rate.toFixed(2)} {data.base}
     </h3>
   );
 }
