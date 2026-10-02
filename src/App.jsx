@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import Form from "./Form/Form";
+import Result from "./Result/Result";
 
 function App() {
   const [exchangeValue, setExchangeValue] = useState("");
@@ -33,7 +34,7 @@ function App() {
               base={base}
               handleChangeBase={handleChangeBase}
             />
-            <h3>100</h3>
+            <Result exchangeValue={exchangeValue} quote={quote} base={base} />
           </div>
         </div>
       </div>
