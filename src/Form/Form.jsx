@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 function Form({
   exchangeValue,
   handleChangeExchangeValue,
@@ -7,32 +5,8 @@ function Form({
   handleChangeQuote,
   base,
   handleChangeBase,
+  currencies,
 }) {
-  const [currencies, setCurrencies] = useState([]);
-
-  useEffect(function () {
-    const controller = new AbortController();
-
-    async function fetchCurrencies() {
-      try {
-        const res = await fetch("https://api.frankfurter.dev/v2/rates", {
-          signal: controller.signal,
-        });
-        if (!res.ok) throw new Error("Błąd serwera: " + res.status);
-        const json = await res.json();
-        setCurrencies(json);
-      } catch (err) {
-        if (err.name !== "AbortError") setError(err.message);
-      }
-    }
-
-    fetchCurrencies();
-
-    return function () {
-      controller.abort();
-    };
-  }, []);
-
   return (
     <form className="container px-0">
       <div className="row">

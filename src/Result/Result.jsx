@@ -33,14 +33,14 @@ function Result({ exchangeValue, quoteValue, baseValue }) {
     [quoteValue, baseValue],
   );
 
-  if (data && exchangeValue > 0) {
-    return (
-      <h3>
-        Do wypłaty: {(exchangeValue * rate).toFixed(2)} {quote} po kursie{" "}
-        {rate.toFixed(2)} {base}
-      </h3>
-    );
-  }
+  return data && exchangeValue > 0 ? (
+    <h3>
+      Do wypłaty: {(exchangeValue * rate).toFixed(2)} {quote} po kursie{" "}
+      {rate.toFixed(2)} {base}
+    </h3>
+  ) : (
+    <p>Wpisz w powyższym formularzu jakąś kwotę.</p>
+  );
 }
 
 export default Result;
