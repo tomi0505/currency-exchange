@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { useEffect } from "react";
 
-function Result({ exchangeValue, quoteValue, baseValue }) {
+function Result({
+  exchangeValue,
+  quoteValue,
+  baseValue,
+  dataIsLoading,
+  setDataIsLoading,
+}) {
   const [data, setData] = useState(null);
 
   const { rate, quote, base } = data ?? {};
@@ -11,6 +17,8 @@ function Result({ exchangeValue, quoteValue, baseValue }) {
       const controller = new AbortController();
 
       async function fetchRate() {
+        setDataIsLoading(true);
+
         try {
           const res = await fetch(
             `https://api.frankfurter.dev/v2/rates?quotes=${quoteValue}&base=${baseValue}`,
@@ -19,6 +27,7 @@ function Result({ exchangeValue, quoteValue, baseValue }) {
           if (!res.ok) throw new Error("Błąd serwera: " + res.status);
           const json = await res.json();
           setData(json[0]);
+          setDataIsLoading(false);
         } catch (err) {
           if (err.name !== "AbortError") setError(err.message);
         }
@@ -34,10 +43,14 @@ function Result({ exchangeValue, quoteValue, baseValue }) {
   );
 
   return data && exchangeValue > 0 ? (
-    <h3>
-      Do wypłaty: {(exchangeValue * rate).toFixed(2)} {quote} po kursie{" "}
-      {rate.toFixed(2)} {base}
-    </h3>
+    !dataIsLoading ? (
+      <h3>
+        Do wypłaty: {(exchangeValue * rate).toFixed(2)} {quote} po kursie{" "}
+        {rate.toFixed(2)} {base}
+      </h3>
+    ) : (
+      <p>Odświeżam dane...</p>
+    )
   ) : (
     <p>Wpisz w powyższym formularzu jakąś kwotę.</p>
   );

@@ -7,8 +7,8 @@ function App() {
   const [exchangeValue, setExchangeValue] = useState("");
   const [quote, setQuote] = useState("PLN");
   const [base, setBase] = useState("EUR");
-
   const [currencies, setCurrencies] = useState([]);
+  const [dataIsLoading, setDataIsLoading] = useState(false);
 
   useEffect(function () {
     const controller = new AbortController();
@@ -58,11 +58,14 @@ function App() {
             base={base}
             handleChangeBase={handleChangeBase}
             currencies={currencies}
+            dataIsLoading={dataIsLoading}
           />
           <Result
             exchangeValue={exchangeValue}
             quoteValue={quote}
             baseValue={base}
+            dataIsLoading={dataIsLoading}
+            setDataIsLoading={setDataIsLoading}
           />
         </div>
       </div>

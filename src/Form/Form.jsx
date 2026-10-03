@@ -6,6 +6,7 @@ function Form({
   base,
   handleChangeBase,
   currencies,
+  dataIsLoading,
 }) {
   return (
     <form className="container px-0">
@@ -19,6 +20,7 @@ function Form({
             placeholder="Kwota"
             value={exchangeValue}
             onChange={handleChangeExchangeValue}
+            disabled={dataIsLoading}
           />
         </div>
         <div className="col-12 mb-3 col-md-3">
@@ -27,6 +29,7 @@ function Form({
             aria-label="quote"
             value={quote}
             onChange={handleChangeQuote}
+            disabled={dataIsLoading}
           >
             {currencies.map((currency) => {
               return (
@@ -43,6 +46,7 @@ function Form({
             aria-label="base"
             value={base}
             onChange={handleChangeBase}
+            disabled={dataIsLoading}
           >
             {currencies.map((currency) => {
               return (
